@@ -10,7 +10,7 @@ const createProduct = (newProduct) => {
       })
       if (checkProduct !== null) {
         resolve({
-          status: 'OK',
+          status: 'ERR',
           message: 'The name of product is already'
         })
       }
@@ -37,7 +37,7 @@ const updateProduct = (id, data) => {
 
       if (checkProduct === null) {
         resolve({
-          status: 'OK',
+          status: 'ERR',
           message: 'The product is not defined'
         })
       }
@@ -64,7 +64,7 @@ const deleteProduct = (id) => {
 
       if (checkProduct === null) {
         resolve({
-          status: 'OK',
+          status: 'ERR',
           message: 'The product is not defined'
         })
       }
@@ -84,11 +84,9 @@ const deleteProduct = (id) => {
 const getAllProduct = (limit, page, sort, filter) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log('filter', filter)
       const totalProduct = await Product.countDocuments()
       if (filter) {
         const label = filter[0]
-        console.log('label', label)
         const allProductFilter = await Product.find({ [label]: { $regex: filter[1] } })
           .limit(limit)
           .skip(page * limit)
@@ -121,7 +119,6 @@ const getAllProduct = (limit, page, sort, filter) => {
       const allProduct = await Product.find()
         .limit(limit)
         .skip(page * limit)
-        .sort({ name: sort })
 
       resolve({
         status: 'OK',
@@ -145,7 +142,7 @@ const getDetailsProduct = (id) => {
       })
       if (product === null) {
         resolve({
-          status: 'OK',
+          status: 'ERR',
           message: 'The product is not defined'
         })
       }
