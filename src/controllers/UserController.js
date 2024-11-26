@@ -138,6 +138,21 @@ const refreshToken = async (req, res) => {
   }
 }
 
+const deleteManyUser = async (req, res) => {
+  try {
+    const ids = req.body.id
+    if (!ids) {
+      return res.status(200).json({
+        status: 'ERR',
+        message: 'The ids is required'
+      })
+    }
+    const response = await UserService.deleteManyUser(ids)
+    return res.status(200).json(response)
+  } catch (err) {
+    return res.status(404).json({ err: err, message: err })
+  }
+}
 module.exports = {
   createUser,
   loginUser,
@@ -146,5 +161,6 @@ module.exports = {
   getAllUser,
   getDetailsUser,
   refreshToken,
-  logOutUser
+  logOutUser,
+  deleteManyUser
 }

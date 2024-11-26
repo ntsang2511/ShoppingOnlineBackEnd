@@ -2,7 +2,7 @@ const Product = require('../models/ProductModel')
 
 const createProduct = (newProduct) => {
   return new Promise(async (resolve, reject) => {
-    const { name, image, type, price, countInStock, rating, description } = newProduct
+    const { name, image, type, price, countInStock, rating, description, discount } = newProduct
 
     try {
       const checkProduct = await Product.findOne({
@@ -14,7 +14,7 @@ const createProduct = (newProduct) => {
           message: 'The name of product is already'
         })
       }
-      const newProduct = await Product.create({ name, image, type, price, countInStock, rating, description })
+      const newProduct = await Product.create({ name, image, type, price, countInStock, rating, description, discount })
       if (newProduct) {
         resolve({
           status: 'OK',
@@ -85,6 +85,7 @@ const getAllProduct = (limit, page, sort, filter) => {
   return new Promise(async (resolve, reject) => {
     try {
       const totalProduct = await Product.countDocuments()
+      let allProduct = []
       if (filter) {
         const label = filter[0]
         const allProductFilter = await Product.find({ [label]: { $regex: filter[1] } })
@@ -116,9 +117,13 @@ const getAllProduct = (limit, page, sort, filter) => {
           totalPage: Math.ceil(totalProduct / limit)
         })
       }
-      const allProduct = await Product.find()
-        .limit(limit)
-        .skip(page * limit)
+      if (!limit) {
+        allProduct = await Product.find()
+      } else {
+        allProduct = await Product.find()
+          .limit(limit)
+          .skip(page * limit)
+      }
 
       resolve({
         status: 'OK',
@@ -127,6 +132,22 @@ const getAllProduct = (limit, page, sort, filter) => {
         total: totalProduct,
         pageCurrent: page + 1,
         totalPage: Math.ceil(totalProduct / limit)
+      })
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+const getAllTypeProduct = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const allType = await Product.distinct('type')
+
+      resolve({
+        status: 'OK',
+        message: 'Get all Product sucessfully',
+        data: allType
       })
     } catch (err) {
       reject(err)
@@ -157,4 +178,26 @@ const getDetailsProduct = (id) => {
     }
   })
 }
-module.exports = { createProduct, updateProduct, getDetailsProduct, deleteProduct, getAllProduct }
+const deleteManyProduct = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await Product.deleteMany({ _id: id })
+
+      resolve({
+        status: 'OK',
+        message: 'Delete product  sucessfully'
+      })
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+module.exports = {
+  createProduct,
+  updateProduct,
+  getDetailsProduct,
+  deleteProduct,
+  getAllProduct,
+  deleteManyProduct,
+  getAllTypeProduct
+}
