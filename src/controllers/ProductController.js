@@ -5,7 +5,6 @@ const createProduct = async (req, res) => {
     const { name, image, type, price, countInStock, rating, description, discount } = req.body
 
     if (!name || !image || !type || !price || !countInStock || !rating || !discount) {
-      console.log(name)
       return res.status(200).json({
         status: 'ERR',
         message: 'The input is require'
@@ -54,6 +53,7 @@ const deleteProduct = async (req, res) => {
 const getAllProduct = async (req, res) => {
   try {
     const { limit, page, sort, filter } = req.query
+    console.log(limit, page, sort, filter)
     const response = await ProductService.getAllProduct(Number(limit) || null, Number(page) || 0, sort, filter)
     return res.status(200).json(response)
   } catch (err) {
@@ -78,7 +78,6 @@ const getDetailProduct = async (req, res) => {
 }
 
 const deleteManyProduct = async (req, res) => {
-  console.log(req.body)
   try {
     const ids = req.body.id
     if (!ids) {

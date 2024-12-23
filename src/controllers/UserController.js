@@ -9,17 +9,17 @@ const createUser = async (req, res) => {
     if (!name || !email || !password || !confirmPassword || !phone) {
       return res.status(200).json({
         status: 'ERR',
-        message: 'The input is require'
+        message: 'Hãy nhập đầy đủ thông tin đăng ký'
       })
     } else if (!isCheckEmail) {
       return res.status(200).json({
         status: 'ERR',
-        message: 'The input is email'
+        message: 'Vui lòng nhập đúng định dạng email'
       })
     } else if (password !== confirmPassword) {
       return res.status(200).json({
         status: 'ERR',
-        message: 'The passowrd is must equal confirmPassword'
+        message: 'Mật khẩu và xác nhận mật khẩu chưa giống nhau'
       })
     }
     const response = await UserService.createUser(req.body)
@@ -37,12 +37,12 @@ const loginUser = async (req, res) => {
     if (!email || !password) {
       return res.status(200).json({
         status: 'ERR',
-        message: 'The input is require'
+        message: 'Vui lòng nhập đầy đủ email và mật khẩu'
       })
     } else if (!isCheckEmail) {
       return res.status(200).json({
         status: 'ERR',
-        message: 'The input is email'
+        message: 'Vui lòng nhập đúng định dạng email'
       })
     }
     const response = await UserService.loginUser(req.body)
@@ -59,7 +59,7 @@ const logOutUser = async (req, res) => {
     res.clearCookie('refresh_token')
     return res.status(200).json({
       status: 'OK',
-      message: 'Logout successfully'
+      message: 'Đăng xuất thành công'
     })
   } catch (err) {
     return res.status(404).json({ err: err, message: err })

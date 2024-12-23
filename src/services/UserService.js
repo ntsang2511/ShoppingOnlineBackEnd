@@ -13,7 +13,7 @@ const createUser = (newUser) => {
       if (checkUser !== null) {
         resolve({
           status: 'ERR',
-          message: 'The email is already in the account'
+          message: 'Email này đã có người sử dụng, hãy thay đổi email khác'
         })
       }
       const hash = bcrypt.hashSync(password, 10)
@@ -22,7 +22,7 @@ const createUser = (newUser) => {
       if (createdUser) {
         resolve({
           status: 'OK',
-          message: 'success',
+          message: 'Tạo tài khoản thành công',
           data: createdUser
         })
       }
@@ -42,16 +42,17 @@ const loginUser = (userLogin) => {
       if (checkUser === null) {
         resolve({
           status: 'ERR',
-          message: 'The user is not defined'
+          message: 'Tài khoản này chưa được đăng ký'
         })
       }
 
       const comparePassword = bcrypt.compareSync(password, checkUser.password)
 
-      if (!comparePassword) {
+      if (comparePassword === false) {
+        console.log(comparePassword)
         resolve({
           status: 'ERR',
-          message: 'The password or user is incorrect'
+          message: 'Mật khẩu chưa chính xác'
         })
       }
 
@@ -90,7 +91,7 @@ const updateUser = (id, data) => {
       if (checkUser === null) {
         resolve({
           status: 'ERR',
-          message: 'The user is not defined'
+          message: 'Tài khoản không tồn tại'
         })
       }
 
@@ -98,7 +99,7 @@ const updateUser = (id, data) => {
 
       resolve({
         status: 'OK',
-        message: 'success',
+        message: 'Cập nhập thông tin người dùng thành công',
         data: updatedUserById
       })
     } catch (err) {
@@ -117,7 +118,7 @@ const deleteUser = (id) => {
       if (checkUser === null) {
         resolve({
           status: 'ERR',
-          message: 'The user is not defined'
+          message: 'Tài khoản không tồn tại'
         })
       }
 
@@ -125,7 +126,7 @@ const deleteUser = (id) => {
 
       resolve({
         status: 'OK',
-        message: 'Delete user sucessfully'
+        message: 'Xóa người dùng thành công'
       })
     } catch (err) {
       reject(err)
@@ -140,7 +141,7 @@ const getAllUser = (id) => {
 
       resolve({
         status: 'OK',
-        message: 'Get all user sucessfully',
+        message: 'Lấy danh sách người dùng thành công',
         data: allUser
       })
     } catch (err) {
@@ -158,13 +159,13 @@ const getDetailsUser = (id) => {
       if (user === null) {
         resolve({
           status: 'ERR',
-          message: 'The user is not defined'
+          message: 'Tài khoản không tồn tại'
         })
       }
 
       resolve({
         status: 'OK',
-        message: 'Get details success',
+        message: 'Lấy thông tin chi tiết người dùng thành công',
         data: user
       })
     } catch (err) {
@@ -180,7 +181,7 @@ const deleteManyUser = (ids) => {
 
       resolve({
         status: 'OK',
-        message: 'Delete user sucessfully'
+        message: 'Xóa người dùng thành công'
       })
     } catch (err) {
       reject(err)

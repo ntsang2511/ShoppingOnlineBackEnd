@@ -11,14 +11,14 @@ const createProduct = (newProduct) => {
       if (checkProduct !== null) {
         resolve({
           status: 'ERR',
-          message: 'The name of product is already'
+          message: 'Tên của sản phẩm này đã tồn tại, hãy tạo sản phẩm khác'
         })
       }
       const newProduct = await Product.create({ name, image, type, price, countInStock, rating, description, discount })
       if (newProduct) {
         resolve({
           status: 'OK',
-          message: 'success',
+          message: 'Tạo sản phẩm mới thành công',
           data: newProduct
         })
       }
@@ -38,7 +38,7 @@ const updateProduct = (id, data) => {
       if (checkProduct === null) {
         resolve({
           status: 'ERR',
-          message: 'The product is not defined'
+          message: 'Sản phẩm không tồn tại'
         })
       }
 
@@ -46,7 +46,7 @@ const updateProduct = (id, data) => {
 
       resolve({
         status: 'OK',
-        message: 'success',
+        message: 'Cập nhập thông tin sản phẩm thành công',
         data: updatedProductById
       })
     } catch (err) {
@@ -65,7 +65,7 @@ const deleteProduct = (id) => {
       if (checkProduct === null) {
         resolve({
           status: 'ERR',
-          message: 'The product is not defined'
+          message: 'Sản phẩm không tồn tại'
         })
       }
 
@@ -73,7 +73,7 @@ const deleteProduct = (id) => {
 
       resolve({
         status: 'OK',
-        message: 'Delete product  sucessfully'
+        message: 'Xóa sản phẩm thành công'
       })
     } catch (err) {
       reject(err)
@@ -164,7 +164,7 @@ const getDetailsProduct = (id) => {
       if (product === null) {
         resolve({
           status: 'ERR',
-          message: 'The product is not defined'
+          message: 'Sản phẩm không tồn tại'
         })
       }
 
@@ -185,7 +185,7 @@ const deleteManyProduct = (id) => {
 
       resolve({
         status: 'OK',
-        message: 'Delete product  sucessfully'
+        message: 'Xóa thành công'
       })
     } catch (err) {
       reject(err)
