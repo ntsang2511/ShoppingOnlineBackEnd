@@ -49,7 +49,6 @@ const loginUser = (userLogin) => {
       const comparePassword = bcrypt.compareSync(password, checkUser.password)
 
       if (comparePassword === false) {
-        console.log(comparePassword)
         resolve({
           status: 'ERR',
           message: 'Mật khẩu chưa chính xác'

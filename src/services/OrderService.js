@@ -88,7 +88,8 @@ const getAllOrderDetails = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const order = await Order.find({
-        user: id
+        user: id,
+        isDelivered: false
       })
       if (order === null) {
         resolve({
@@ -107,7 +108,30 @@ const getAllOrderDetails = (id) => {
     }
   })
 }
+const getAllOrderShipper = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const order = await Order.find({
+        isDelivered: false
+      })
+      console.log(order)
+      if (order === null) {
+        resolve({
+          status: 'ERR',
+          message: 'Không có đơn hàng cần giao'
+        })
+      }
 
+      resolve({
+        status: 'OK',
+        message: 'Lấy đơn hàng thành công',
+        data: order
+      })
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
 const getOrderDetails = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -213,4 +237,44 @@ const cancelOrderDetails = (orderId) => {
   })
 }
 
-module.exports = { createOrder, getAllOrderDetails, getOrderDetails, cancelOrderDetails }
+const deliveryOrder = (orderId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const order = await Order.findById(orderId)
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' })
+      }
+
+      // Cập nhật trạng thái isDelivered
+      order.isDelivered = true
+      order.deliveredAt = Date.now()
+      if (isPaid === false) {
+        order.isPaid = true
+        order.paidAt = Date.now()
+      }
+      // Lưu lại thay đổi
+      await order.save()
+
+      return resolve({
+        status: 'OK',
+        message: 'Đơn hàng đã được giao thành công'
+      })
+    } catch (err) {
+      console.error(err)
+      reject({
+        status: 'ERR',
+        message: 'Đã xảy ra lỗi trong quá trình xóa đơn hàng',
+        error: err.message
+      })
+    }
+  })
+}
+
+module.exports = {
+  createOrder,
+  getAllOrderDetails,
+  getOrderDetails,
+  cancelOrderDetails,
+  getAllOrderShipper,
+  deliveryOrder
+}

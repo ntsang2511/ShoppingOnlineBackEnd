@@ -15,7 +15,18 @@ const createOrder = async (req, res) => {
     return res.status(404).json({ err: err, message: err })
   }
 }
-
+const deliveryOrder = async (req, res) => {
+  try {
+    const { orderId } = req.body
+    if (!orderId) {
+      return res.status(400).json({ message: 'Order ID is required' })
+    }
+    const response = await OrderService.deliveryOrder(orderId)
+    return res.status(200).json(response)
+  } catch (err) {
+    return res.status(404).json({ err: err, message: err })
+  }
+}
 const getAllOrderDetails = async (req, res) => {
   try {
     const userId = req.params.id
@@ -26,6 +37,15 @@ const getAllOrderDetails = async (req, res) => {
       })
     }
     const response = await OrderService.getAllOrderDetails(userId)
+    return res.status(200).json(response)
+  } catch (err) {
+    return res.status(404).json({ err: err, message: err })
+  }
+}
+const getAllOrderShipper = async (req, res) => {
+  try {
+    console.log(12)
+    const response = await OrderService.getAllOrderShipper()
     return res.status(200).json(response)
   } catch (err) {
     return res.status(404).json({ err: err, message: err })
@@ -66,5 +86,7 @@ module.exports = {
   createOrder,
   getAllOrderDetails,
   getDetailsOrder,
-  cancelOrderDetails
+  cancelOrderDetails,
+  getAllOrderShipper,
+  deliveryOrder
 }

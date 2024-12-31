@@ -10,7 +10,6 @@ const config = {
   endpoint: 'https://sb-openapi.zalopay.vn/v2/create'
 }
 const createOrder = async (orderInfo) => {
-  const items = [{}]
   const transID = Math.floor(Math.random() * 1000000)
   const embed_data = {
     redirecturl: 'http://localhost:5173'
@@ -25,7 +24,7 @@ const createOrder = async (orderInfo) => {
     amount: orderInfo.amount,
     description: `Lazada - Payment for the order #${transID}`,
     bank_code: orderInfo.bankCode,
-    callback_url: 'https://5085-27-2-128-132.ngrok-free.app/api/payment/zalopay/callback'
+    callback_url: 'https://76c4-2403-e200-179-5c2c-59de-fcbe-d5a-49ef.ngrok-free.app/api/payment/zalopay/callback'
   }
   console.log(`App trans iD is ${moment().format('YYMMDD')}_${transID}`)
   const data =
