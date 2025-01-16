@@ -59,6 +59,15 @@ const getAllProduct = async (req, res) => {
     return res.status(404).json({ err: err, message: err })
   }
 }
+const getAllProductRating = async (req, res) => {
+  try {
+    const { name } = req.body
+    const response = await ProductService.getRatingProduct(name)
+    return res.status(200).json(response)
+  } catch (err) {
+    return res.status(404).json({ err: err, message: err })
+  }
+}
 
 const getDetailProduct = async (req, res) => {
   try {
@@ -107,5 +116,6 @@ module.exports = {
   deleteProduct,
   getAllProduct,
   deleteManyProduct,
-  getAllTypeProduct
+  getAllTypeProduct,
+  getAllProductRating
 }

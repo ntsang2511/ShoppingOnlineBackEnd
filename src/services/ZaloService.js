@@ -24,7 +24,7 @@ const createOrder = async (orderInfo) => {
     amount: orderInfo.amount,
     description: `Lazada - Payment for the order #${transID}`,
     bank_code: orderInfo.bankCode,
-    callback_url: 'https://76c4-2403-e200-179-5c2c-59de-fcbe-d5a-49ef.ngrok-free.app/api/payment/zalopay/callback'
+    callback_url: 'https://c970-103-89-86-114.ngrok-free.app/api/payment/zalopay/callback'
   }
   console.log(`App trans iD is ${moment().format('YYMMDD')}_${transID}`)
   const data =

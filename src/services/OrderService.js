@@ -248,7 +248,7 @@ const deliveryOrder = (orderId) => {
       // Cập nhật trạng thái isDelivered
       order.isDelivered = true
       order.deliveredAt = Date.now()
-      if (isPaid === false) {
+      if (order.isPaid === false) {
         order.isPaid = true
         order.paidAt = Date.now()
       }
@@ -270,11 +270,36 @@ const deliveryOrder = (orderId) => {
   })
 }
 
+const getShippedByUserId = (userid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const order = await Order.find({ user: userid, isPaid: true })
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' })
+      }
+
+      return resolve({
+        status: 'OK',
+        message: 'Đơn hàng đã được giao thành công',
+        data: order
+      })
+    } catch (err) {
+      console.error(err)
+      reject({
+        status: 'ERR',
+        message: 'Đã xảy ra lỗi trong quá trình xóa đơn hàng',
+        error: err.message
+      })
+    }
+  })
+}
+
 module.exports = {
   createOrder,
   getAllOrderDetails,
   getOrderDetails,
   cancelOrderDetails,
   getAllOrderShipper,
-  deliveryOrder
+  deliveryOrder,
+  getShippedByUserId
 }

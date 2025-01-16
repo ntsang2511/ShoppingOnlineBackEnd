@@ -82,11 +82,29 @@ const cancelOrderDetails = async (req, res) => {
     return res.status(404).json({ err: err, message: err })
   }
 }
+
+const getShippedOrderByUserId = async (req, res) => {
+  try {
+    const { userid } = req.params
+    if (!userid) {
+      return res.status(200).json({
+        status: 'ERR',
+        message: 'The userid is required'
+      })
+    }
+    const response = await OrderService.getShippedByUserId(userid)
+    return res.status(200).json(response)
+  } catch (err) {
+    return res.status(404).json({ err: err, message: err })
+  }
+}
+
 module.exports = {
   createOrder,
   getAllOrderDetails,
   getDetailsOrder,
   cancelOrderDetails,
   getAllOrderShipper,
-  deliveryOrder
+  deliveryOrder,
+  getShippedOrderByUserId
 }
