@@ -54,23 +54,27 @@ const deleteProductRating = (id) => {
   })
 }
 
-const getRatingProduct = (name) => {
+const getRatingProduct = (name, limit, page) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(name)
-      const productRatings = await ProductRating.find({ name })
-      console.log('🚀 ~ returnnewPromise ~ productRatings:', productRatings)
-      if (productRatings.length < 0) {
+      const totalProductRating = await ProductRating.find({ name }).countDocuments()
+      console.log(totalProductRating)
+      const allProductRating = await ProductRating.find({ name })
+        .limit(limit)
+        .skip(page * limit)
+      if (allProductRating.length < 0) {
         resolve({
           status: 'OK',
-          message: 'Chưa có đánh giá nào cho sản phẩm này'
+          message: 'Không có đánh giá nào cho sản phẩm'
         })
       }
-
       resolve({
         status: 'OK',
         message: 'Đã lấy thành công đánh giá sản phẩm',
-        data: productRatings
+        data: allProductRating,
+        total: totalProductRating,
+        pageCurrent: page + 1,
+        totalPage: Math.ceil(totalProductRating / limit)
       })
     } catch (err) {
       reject(err)

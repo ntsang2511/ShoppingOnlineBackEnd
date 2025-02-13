@@ -2,14 +2,9 @@ const ProductRatingService = require('../services/ProductRatingService')
 
 const getProductRating = async (req, res) => {
   try {
-    const name = req.params.name
-    if (!name) {
-      return res.status(200).json({
-        status: 'ERR',
-        message: 'Sản phẩm không tồn tại'
-      })
-    }
-    const response = await ProductRatingService.getRatingProduct(name)
+    const { limit, page } = req.query
+    const { name } = req.params
+    const response = await ProductRatingService.getRatingProduct(name, Number(limit) || null, Number(page) || 0)
     return res.status(200).json(response)
   } catch (err) {
     return res.status(404).json({ err: err, message: err })
