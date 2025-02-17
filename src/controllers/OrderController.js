@@ -67,6 +67,15 @@ const getDetailsOrder = async (req, res) => {
   }
 }
 
+const getAllOrderAdmin = async (req, res) => {
+  try {
+    const data = await OrderService.getAllOrderAdmin()
+    return res.status(200).json(data)
+  } catch (err) {
+    return res.status(404).json({ err: err, message: err })
+  }
+}
+
 const cancelOrderDetails = async (req, res) => {
   try {
     const orderId = req.params.id
@@ -105,6 +114,7 @@ module.exports = {
   getDetailsOrder,
   cancelOrderDetails,
   getAllOrderShipper,
+  getAllOrderAdmin,
   deliveryOrder,
   getShippedOrderByUserId
 }

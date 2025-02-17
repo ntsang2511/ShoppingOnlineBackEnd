@@ -156,6 +156,22 @@ const getOrderDetails = (id) => {
   })
 }
 
+const getAllOrderAdmin = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const allOrder = await Order.find()
+
+      resolve({
+        status: 'OK',
+        message: 'Lấy danh sách đặt hàng thành công',
+        data: allOrder
+      })
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
 const cancelOrderDetails = (orderId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -301,5 +317,6 @@ module.exports = {
   cancelOrderDetails,
   getAllOrderShipper,
   deliveryOrder,
+  getAllOrderAdmin,
   getShippedByUserId
 }
