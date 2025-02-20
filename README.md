@@ -28,7 +28,7 @@ Cung cấp RESTful API.
 
 
 ## Cài đặt
-- Tải về máy
+- Tải về máy:
 git clone https://github.com/ntsang2511/ShoppingOnlineBackEnd.git
 
 - Tạo tài khoản mongoDB để tạo lưu trữ và thay link MONGOO_DB mới trong file .env ( Đảm bảo port 3001 có sẵn trong file .env chưa có dự án nào đang hoạt động trên đó, nếu có hãy đổi sang port khác)
