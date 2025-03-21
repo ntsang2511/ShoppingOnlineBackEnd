@@ -26,7 +26,6 @@ const createOrder = async (orderInfo) => {
     bank_code: orderInfo.bankCode,
     callback_url: 'https://shoppingonlinebackend.onrender.com/api/payment/zalopay/callback'
   }
-  console.log(`App trans iD is ${moment().format('YYMMDD')}_${transID}`)
   const data =
     config.app_id +
     '|' +
@@ -66,8 +65,6 @@ const zaloPaymentCallback = async (dataStr, reqMac) => {
       // Lấy orderID từ order mới tạo
       const orderId = JSON.parse(dataJson.item)
       const orderUpdate = await Order.findByIdAndUpdate(orderId[0].orderId, { isPaid: true }, { new: true })
-      console.log(orderUpdate)
-      console.log("update order's status = success where app_trans_id =", dataJson['app_trans_id'])
       result.return_code = 1
       result.return_message = 'success'
     }

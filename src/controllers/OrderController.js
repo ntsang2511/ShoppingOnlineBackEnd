@@ -44,7 +44,6 @@ const getAllOrderDetails = async (req, res) => {
 }
 const getAllOrderShipper = async (req, res) => {
   try {
-    console.log(12)
     const response = await OrderService.getAllOrderShipper()
     return res.status(200).json(response)
   } catch (err) {

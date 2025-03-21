@@ -58,7 +58,6 @@ const getRatingProduct = (name, limit, page) => {
   return new Promise(async (resolve, reject) => {
     try {
       const totalProductRating = await ProductRating.find({ name }).countDocuments()
-      console.log(totalProductRating)
       const allProductRating = await ProductRating.find({ name })
         .limit(limit)
         .skip(page * limit)

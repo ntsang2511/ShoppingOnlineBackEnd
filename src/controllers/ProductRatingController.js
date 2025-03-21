@@ -34,7 +34,6 @@ const editProductRating = async (req, res) => {
 const deleteproductRating = async (req, res) => {
   try {
     const { id } = req.params
-    console.log('hahahahaha', id)
     const response = await ProductRatingService.deleteProductRating(id)
     return res.status(200).json(response)
   } catch (err) {
