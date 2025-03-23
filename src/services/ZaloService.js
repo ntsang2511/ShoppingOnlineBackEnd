@@ -12,7 +12,7 @@ const config = {
 const createOrder = async (orderInfo) => {
   const transID = Math.floor(Math.random() * 1000000)
   const embed_data = {
-    redirecturl: 'http://localhost:5173'
+    redirecturl: 'https://online-watch-shop.vercel.app'
   }
   const order = {
     app_id: config.app_id,
