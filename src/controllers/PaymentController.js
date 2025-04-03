@@ -3,6 +3,7 @@ const zaloPayment = async (req, res) => {
   try {
     const { amount, bankCode, items, user } = req.body
     const orderInfo = { amount, bankCode, items, user }
+    console.log('6' + orderInfo)
     // Gọi service để tạo order
     const zaloPayResponse = await zaloService.createOrder(orderInfo)
     res.status(200).json({
