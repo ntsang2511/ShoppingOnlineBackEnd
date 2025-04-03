@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env BUILD_MODE=dev nodemon --exec babel-node ./src/index.js",
-    "production": "npm run build && cross-env BUILD_MODE=production node ./build/src/index.js"
+    "production": "npm run build && cross-env BUILD_MODE=production node ./build/src/index.js",
+    "build": "npm run build && cross-env BUILD_MODE=production node ./build/src/index.js"
   },
   "author": "",
   "license": "ISC",
