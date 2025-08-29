@@ -2,9 +2,8 @@ const ProductRatingService = require('../services/ProductRatingService')
 
 const getProductRating = async (req, res) => {
   try {
-    const { limit, page } = req.query
     const { name } = req.params
-    const response = await ProductRatingService.getRatingProduct(name, Number(limit) || null, Number(page) || 0)
+    const response = await ProductRatingService.getRatingProduct(name)
     return res.status(200).json(response)
   } catch (err) {
     return res.status(404).json({ err: err, message: err })
@@ -23,8 +22,8 @@ const createProductRating = async (req, res) => {
 
 const editProductRating = async (req, res) => {
   try {
-    const { user, name, rating, comment } = req.body
-    const response = await ProductRatingService.editProductRating(user, name, rating, comment)
+    const { id, user, name, rating, comment, likes, dislikes } = req.body
+    const response = await ProductRatingService.editProductRating(id, user, name, rating, comment, likes, dislikes)
     return res.status(200).json(response)
   } catch (err) {
     return res.status(404).json({ err: err, message: err })

@@ -6,6 +6,7 @@ const cartItemSchema = new mongoose.Schema({
   image: { type: String, required: true },
   price: { type: Number, required: true },
   discount: { type: Number },
+  countInStock: { type: Number },
   product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
